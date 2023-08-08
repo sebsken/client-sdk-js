@@ -83,10 +83,7 @@ const appActions = {
     updateSearchParams(url, token, cryptoKey);
 
     const roomOpts: RoomOptions = {
-      adaptiveStream: {
-        pixelDensity: 'screen',
-        pauseVideoInBackground: false
-      },
+      adaptiveStream,
       dynacast,
       publishDefaults: {
         simulcast,

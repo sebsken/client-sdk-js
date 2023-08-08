@@ -273,6 +273,7 @@ export default abstract class LocalTrack extends Track {
     await super.handleAppVisibilityChanged();
     if (!isMobile()) return;
     log.debug(`visibility changed, is in Background: ${this.isInBackground}`);
+    console.log(`local track handleAppVisibilityChanged ${this.isInBackground}`);
 
     if (!this.isInBackground && this.needsReAcquisition && !this.isUserProvided && !this.isMuted) {
       log.debug(`track needs to be reacquired, restarting ${this.source}`);

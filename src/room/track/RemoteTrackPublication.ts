@@ -274,6 +274,8 @@ export default class RemoteTrackPublication extends TrackPublication {
   }
 
   protected handleVisibilityChange = (visible: boolean) => {
+    
+    console.log(`remote track publication handleVisibilityChange ${visible}`);
     log.debug(`adaptivestream video visibility ${this.trackSid}, visible=${visible}`, {
       trackSid: this.trackSid,
     });

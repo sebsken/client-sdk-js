@@ -345,6 +345,8 @@ export default class LocalVideoTrack extends LocalTrack {
   protected async handleAppVisibilityChanged() {
     await super.handleAppVisibilityChanged();
     if (!isMobile()) return;
+    
+    console.log(`local video track handleAppVisibilityChanged ${this.isInBackground}`);
     if (this.isInBackground && this.source === Track.Source.Camera) {
       this._mediaStreamTrack.enabled = false;
     }
