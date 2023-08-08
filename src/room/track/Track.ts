@@ -252,13 +252,16 @@ export abstract class Track extends (EventEmitter as new () => TypedEventEmitter
 
   protected async handleAppVisibilityChanged() {
     this.isInBackground = document.visibilityState === 'hidden';
+    console.log("handler " +  document.visibilityState)
   }
 
   protected addAppVisibilityListener() {
     if (isWeb()) {
       this.isInBackground = document.visibilityState === 'hidden';
+      console.log("web " +  document.visibilityState)
       document.addEventListener('visibilitychange', this.appVisibilityChangedListener);
     } else {
+      console.log("other " +  document.visibilityState)
       this.isInBackground = false;
     }
   }

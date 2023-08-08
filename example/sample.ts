@@ -31,6 +31,7 @@ import {
   supportsVP9,
 } from '../src/index';
 import type { SimulationScenario } from '../src/room/types';
+import {init_video_processing} from './video_processing.js';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -82,7 +83,10 @@ const appActions = {
     updateSearchParams(url, token, cryptoKey);
 
     const roomOpts: RoomOptions = {
-      adaptiveStream,
+      adaptiveStream: {
+        pixelDensity: 'screen',
+        pauseVideoInBackground: false
+      },
       dynacast,
       publishDefaults: {
         simulcast,
@@ -115,8 +119,16 @@ const appActions = {
       };
     }
     await appActions.connectToRoom(url, token, roomOpts, connectOpts, shouldPublish);
+    init_video_processing();
+    $('fullscreen_button')?.removeAttribute('disabled');
+    $('fullscreen_button')?.removeAttribute('hidden');
 
     state.bitrateInterval = setInterval(renderBitrate, 1000);
+  },
+
+  requestFullScreen() {
+    const output_canvas = <HTMLVideoElement>$("canvas-test");
+    output_canvas.requestFullscreen({ navigationUI: "hide" });
   },
 
   connectToRoom: async (
@@ -560,6 +572,7 @@ function renderParticipant(participant: Participant, remove: boolean = false) {
     };
   }
   const videoElm = <HTMLVideoElement>$(`video-${identity}`);
+  const videoElm2 = <HTMLVideoElement>$('video-test');
   const audioELm = <HTMLAudioElement>$(`audio-${identity}`);
   if (remove) {
     div?.remove();
@@ -615,6 +628,7 @@ function renderParticipant(participant: Participant, remove: boolean = false) {
           fromJoin > 0 ? `, ${fromJoin}ms from start` : '',
         );
       };
+      cameraPub?.videoTrack?.attach(videoElm2);
     }
     cameraPub?.videoTrack?.attach(videoElm);
   } else {

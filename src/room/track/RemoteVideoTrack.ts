@@ -215,12 +215,16 @@ export default class RemoteVideoTrack extends RemoteTrack {
       (prev, info) => Math.max(prev, info.visibilityChangedAt || 0),
       0,
     );
-
+    console.log("isAdaptiveStream " + this.isAdaptiveStream);
+    console.log("adaptiveStreamSettings " + this.adaptiveStreamSettings);
+    console.log("adaptiveStreamSettings " + this.adaptiveStreamSettings?.pauseVideoInBackground);
     const backgroundPause =
       this.adaptiveStreamSettings?.pauseVideoInBackground ?? true // default to true
         ? this.isInBackground
         : false;
+      console.log("backgroundPause " + backgroundPause);
     const isPiPMode = this.elementInfos.some((info) => info.pictureInPicture);
+    this.elementInfos.forEach((info) => console.log("info " + info.element + info.visible));
     const isVisible =
       (this.elementInfos.some((info) => info.visible) && !backgroundPause) || isPiPMode;
 
@@ -237,6 +241,8 @@ export default class RemoteVideoTrack extends RemoteTrack {
     }
 
     this.lastVisible = isVisible;
+    
+    console.log("VisibilityChanged " +  isVisible)
     this.emit(TrackEvent.VisibilityChanged, isVisible, this);
   }
 

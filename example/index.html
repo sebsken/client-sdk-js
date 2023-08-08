@@ -88,6 +88,10 @@
               </button>
             </div>
             <div>
+              <button id="fullscreen_button" class="btn btn-secondary mt-1" type="button" disabled hidden 
+                onclick="appActions.requestFullScreen()">
+                Fullscreen
+              </button>
               <button
                 id="toggle-audio-button"
                 class="btn btn-secondary mt-1"
@@ -272,7 +276,11 @@
       </div>
 
       <div id="participants-area"></div>
-
+      <div>
+        <video id="video-test"></video>
+        <canvas id="canvas-test" width="1920px" height="1080px"></canvas>
+        
+      </div>
       <div id="log-area">
         <textarea id="log"></textarea>
       </div>
