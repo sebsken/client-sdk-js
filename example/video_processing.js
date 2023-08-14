@@ -5,6 +5,8 @@ function init_video_processing() {
     var output_canvas = document.getElementById("canvas-test");
     output_canvas_ctx = output_canvas.getContext('2d', {desynchronized: true});
     received_video = document.getElementById("video-test");
+    received_video.onpause = () =>{console.log("video element paused")};
+    received_video.onplay = () =>{console.log("video element play")};
     requestAnimationFrame(compute_frame);
 }
 
