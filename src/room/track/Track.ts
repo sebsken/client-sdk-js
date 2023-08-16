@@ -252,16 +252,16 @@ export abstract class Track extends (EventEmitter as new () => TypedEventEmitter
 
   protected async handleAppVisibilityChanged() {
     this.isInBackground = document.visibilityState === 'hidden';
-    console.log("handler " +  document.visibilityState)
+    console.log("handler " + document.visibilityState)
   }
 
   protected addAppVisibilityListener() {
     if (isWeb()) {
       this.isInBackground = document.visibilityState === 'hidden';
-      console.log("web " +  document.visibilityState)
+      console.log("web " + document.visibilityState)
       document.addEventListener('visibilitychange', this.appVisibilityChangedListener);
     } else {
-      console.log("other " +  document.visibilityState)
+      console.log("other " + document.visibilityState)
       this.isInBackground = false;
     }
   }
@@ -296,11 +296,14 @@ export function attachToElement(track: MediaStreamTrack, element: HTMLMediaEleme
     mediaStream.addTrack(track);
   }
 
-  element.autoplay = true;
+  //element.autoplay = true;
   // In case there are no audio tracks present on the mediastream, we set the element as muted to ensure autoplay works
   element.muted = mediaStream.getAudioTracks().length === 0;
   if (element instanceof HTMLVideoElement) {
     element.playsInline = true;
+  }
+  else {
+    element.autoplay = true;
   }
 
   // avoid flicker
@@ -323,6 +326,9 @@ export function attachToElement(track: MediaStreamTrack, element: HTMLMediaEleme
         });
       }, 0);
     }
+  }
+  if (element instanceof HTMLVideoElement) {
+    element.play();
   }
 }
 
